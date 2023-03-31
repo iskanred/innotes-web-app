@@ -1,6 +1,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/webstorm+all,svelte,windows,linux,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=webstorm+all,svelte,windows,linux,macos
 
+### Frontend ###
+build/
+node_modules/
+
 ### Linux ###
 *~
 
