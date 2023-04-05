@@ -4,10 +4,10 @@ const manifest = {
 	assets: new Set([".nojekyll"]),
 	mimeTypes: {},
 	_: {
-		client: {"start":{"file":"_app/immutable/entry/start.93d3e205.js","imports":["_app/immutable/entry/start.93d3e205.js","_app/immutable/chunks/index.dada67a2.js","_app/immutable/chunks/singletons.615a2c91.js","_app/immutable/chunks/paths.4618a0f0.js"],"stylesheets":[],"fonts":[]},"app":{"file":"_app/immutable/entry/app.263e2800.js","imports":["_app/immutable/entry/app.263e2800.js","_app/immutable/chunks/index.dada67a2.js"],"stylesheets":[],"fonts":[]}},
+		client: {"start":{"file":"_app/immutable/entry/start.e0d7ef3c.js","imports":["_app/immutable/entry/start.e0d7ef3c.js","_app/immutable/chunks/index.dada67a2.js","_app/immutable/chunks/singletons.57d921b4.js","_app/immutable/chunks/paths.2e7d4bc7.js"],"stylesheets":[],"fonts":[]},"app":{"file":"_app/immutable/entry/app.06264083.js","imports":["_app/immutable/entry/app.06264083.js","_app/immutable/chunks/index.dada67a2.js"],"stylesheets":[],"fonts":[]}},
 		nodes: [
-			() => import('./chunks/0-7dd3c20d.js'),
-			() => import('./chunks/1-0cdc32ee.js'),
+			() => import('./chunks/0-3488c7c9.js'),
+			() => import('./chunks/1-0a83ca94.js'),
 			() => import('./chunks/2-81f315c2.js'),
 			() => import('./chunks/3-f65df50c.js'),
 			() => import('./chunks/4-209aed1b.js'),
