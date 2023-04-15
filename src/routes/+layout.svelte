@@ -1,5 +1,6 @@
 <script>
     import {base} from "$app/paths";
+    import './global-styles.css'
 </script>
 
 <header>
