@@ -24,11 +24,8 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "lint-staged"
+			"pre-commit": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.jso && prettier --write . && git add -A ."
 		}
-	},
-	"lint-staged": {
-		"*": "prettier --write"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
@@ -50,5 +47,12 @@
 		"vite": "^4.0.0",
 		"vitest": "^0.25.3"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@svelteuidev/composables": "^0.11.1",
+		"@svelteuidev/core": "^0.11.1",
+		"@svelteuidev/dates": "^0.11.1",
+		"dayjs": "^1.11.7",
+		"svelte-routing": "^1.6.0"
+	}
 }
