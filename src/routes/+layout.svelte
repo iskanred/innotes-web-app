@@ -1,36 +1,17 @@
 <script>
-	import { base } from '$app/paths';
-	import './global-styles.css';
+	import { SvelteUIProvider } from '@svelteuidev/core';
+	import InnotesHeader from '$lib/widgets/header/ui/InnotesHeader.svelte';
+
+	let isDark = false;
+	function toggleTheme() {
+		isDark = !isDark;
+	}
 </script>
 
-<header>
-	<nav>
-		<a href="{base}/">Innotes</a>
-		<a href="{base}/notes/">My Notes</a>
-		<a href="{base}/about/">About</a>
-		<a href="{base}/auth/">Log in</a>
-	</nav>
-</header>
-
-<slot />
-
-<style>
-	header {
-		text-align: center;
-		background-color: #dedddd;
-		padding: 10px;
-	}
-	nav {
-		height: 100%;
-		width: 100%;
-
-		display: flex;
-		justify-content: space-between;
-	}
-	a {
-		font-size: 36pt;
-		font-weight: bold;
-		margin-left: 10px;
-		margin-right: 10px;
-	}
-</style>
+<SvelteUIProvider withNormalizeCSS withGlobalStyles themeObserver={isDark ? 'dark' : 'light'}>
+	<InnotesHeader />
+	<!--    <Stack align='center'>-->
+	<!--&lt;!&ndash;        <Switch on:change={toggleTheme} />&ndash;&gt;-->
+	<!--    </Stack>-->
+	<slot />
+</SvelteUIProvider>
