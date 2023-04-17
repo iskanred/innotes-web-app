@@ -48,6 +48,7 @@
 		"@svelteuidev/core": "^0.11.1",
 		"@svelteuidev/dates": "^0.11.1",
 		"dayjs": "^1.11.7",
+		"radix-icons-svelte": "^1.2.1",
 		"svelte-routing": "^1.6.0"
 	}
 }

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import { Header, Paper } from '@svelteuidev/core';
-	import HeaderAnchor from '$lib/widgets/header/ui/HeaderAnchor.svelte';
+	import HeaderAnchor from '$lib/pages/home/ui/HeaderAnchor.svelte';
 </script>
 
 <Header height="100%">
@@ -17,9 +17,6 @@
 
 <style>
 	nav {
-		height: 100%;
-		width: 100%;
-
 		display: flex;
 		justify-content: space-around;
 	}

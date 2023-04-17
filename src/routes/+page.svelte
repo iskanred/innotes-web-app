@@ -1,7 +1,25 @@
 <script lang="ts">
+	import { Button, Text } from '@svelteuidev/core';
 </script>
 
-<link
-	rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-/>
+<main>
+	<Text size={52} weight="extrabold">What is this?</Text>
+	<Text size={32}>This service is a simple notes taking web application.</Text>
+	<Button size="lg" ripple>Create your note</Button>
+</main>
+
+<style>
+	main {
+		height: 80vh;
+		width: 100%;
+
+		gap: 72px;
+
+		/* center horizontally */
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+	}
+</style>

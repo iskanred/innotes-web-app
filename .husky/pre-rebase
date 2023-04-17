@@ -3,3 +3,4 @@
 
 npm run check
 npm run lint    # if it errors run "npm run format" firstly
+npm run test
