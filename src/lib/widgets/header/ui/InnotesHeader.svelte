@@ -4,7 +4,7 @@
 	import HeaderAnchor from '$lib/widgets/header/ui/HeaderAnchor.svelte';
 </script>
 
-<Header height='100%'>
+<Header height="100%">
 	<Paper shadow="sm">
 		<nav>
 			<HeaderAnchor href="{base}/" text="Innotes" />
