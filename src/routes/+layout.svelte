@@ -1,6 +1,6 @@
 <script>
 	import { SvelteUIProvider } from '@svelteuidev/core';
-	import InnotesHeader from '$lib/widgets/header/ui/InnotesHeader.svelte';
+	import InnotesHeader from '$lib/pages/home/ui/InnotesHeader.svelte';
 
 	let isDark = false;
 	function toggleTheme() {
