@@ -22,11 +22,6 @@
 		"format": "prettier --plugin-search-dir . --write .",
 		"prepare": "husky install"
 	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.jso && prettier --write . && git add -A ."
-		}
-	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-node": "^1.2.3",
