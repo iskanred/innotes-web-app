@@ -39,7 +39,7 @@
 		"svelte-check": "^3.0.1",
 		"tslib": "^2.4.1",
 		"typescript": "^4.9.3",
-		"vite": "^4.0.0",
+		"vite": "^4.2.1",
 		"vitest": "^0.25.3"
 	},
 	"type": "module",
@@ -49,6 +49,7 @@
 		"@svelteuidev/dates": "^0.11.1",
 		"dayjs": "^1.11.7",
 		"radix-icons-svelte": "^1.2.1",
-		"svelte-routing": "^1.6.0"
+		"svelte-routing": "^1.6.0",
+		"firebase": "^9.6.10"
 	}
 }
