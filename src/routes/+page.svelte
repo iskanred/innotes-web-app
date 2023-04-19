@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { Button, Text } from '@svelteuidev/core';
+	import { Button, Text, Title } from "@svelteuidev/core";
 </script>
 
 <main>
-	<Text size={52} weight="extrabold">What is this?</Text>
+	<Title order={1} size={52} weight="extrabold">What is this?</Title>
 	<Text size={32}>This service is a simple notes taking web application.</Text>
 	<Button size="lg" ripple>Create your note</Button>
 </main>

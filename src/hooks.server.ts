@@ -1,3 +1,3 @@
-import { prepareStylesSSR } from '@svelteuidev/core';
+import { prepareStylesSSR } from "@svelteuidev/core";
 
 export const handle = prepareStylesSSR;

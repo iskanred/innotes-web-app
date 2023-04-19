@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { base } from '$app/paths';
-	import { Header, Paper } from '@svelteuidev/core';
-	import HeaderAnchor from '$lib/pages/home/ui/HeaderAnchor.svelte';
+	import { base } from "$app/paths";
+	import { Header, Paper } from "@svelteuidev/core";
+	import HeaderButton from "$lib/pages/home/ui/HeaderButton.svelte";
 </script>
 
 <Header height="100%">
 	<Paper shadow="sm">
 		<nav>
-			<HeaderAnchor href="{base}/" text="Innotes" />
-			<HeaderAnchor href="{base}/notes/" text="My Notes" />
-			<HeaderAnchor href="{base}/about/" text="About" />
-			<HeaderAnchor href="{base}/auth/" text="Log in" />
+			<HeaderButton href="{base}/" text="Innotes" variant="subtle" textSize={48} />
+			<HeaderButton href="{base}/notes/" text="My notes" variant="subtle" textSize={48} />
+			<HeaderButton href="{base}/about/" text="About" variant="subtle" textSize={48} />
+			<HeaderButton href="{base}/auth/" text="Log in" variant="outline" textSize={24} />
 		</nav>
 	</Paper>
 </Header>
