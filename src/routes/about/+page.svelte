@@ -1,37 +1,37 @@
 <script lang="ts">
-	import { Text } from '@svelteuidev/core';
-	import { base } from '$app/paths';
-	import MemberPage from '$lib/pages/about/ui/MemberPage.svelte';
-	import type { Member } from '$lib/entities/member/Member';
+	import { Title } from "@svelteuidev/core";
+	import { base } from "$app/paths";
+	import MemberPage from "$lib/pages/about/ui/MemberPaper.svelte";
+	import type { Member } from "$lib/entities/member/Member";
 
 	const members: Member[] = [
 		{
-			name: 'Iskander Nafikov',
+			name: "Iskander Nafikov",
 			pathToPhoto: `${base}/images/iskander.jpeg`,
-			role: 'Frontend Developer',
-			email: 'i.nafikov@innopolis.university',
-			github: 'https://github.com/Iskanred'
+			role: "Frontend Developer",
+			email: "i.nafikov@innopolis.university",
+			github: "https://github.com/Iskanred"
 		},
 		{
-			name: 'Alexander Evdokimov',
+			name: "Alexander Evdokimov",
 			pathToPhoto: `${base}/images/template.png`,
-			role: 'Frontend Developer',
-			email: 'a.evdokimov@innopolis.university',
-			github: 'https://github.com/quhaaST'
+			role: "Frontend Developer",
+			email: "a.evdokimov@innopolis.university",
+			github: "https://github.com/quhaaST"
 		},
 		{
-			name: 'Andrey Plekhov',
+			name: "Andrey Plekhov",
 			pathToPhoto: `${base}/images/template.png`,
-			role: 'Frontend Developer',
-			email: 'a.plekhov@innopolis.university',
-			github: 'https://github.com/Majorro'
+			role: "Frontend Developer",
+			email: "a.plekhov@innopolis.university",
+			github: "https://github.com/Majorro"
 		}
 	];
 </script>
 
 <main>
-	<Text size={48} weight="extrabold">Who we are?</Text>
-	<Text size={36} weight="semibold">Innotes Team</Text>
+	<Title order={1} size={48} weight="extrabold">Who we are?</Title>
+	<Title order={2} size={36} weight="semibold">Innotes Team</Title>
 	<ul>
 		{#each members as member}
 			<li>

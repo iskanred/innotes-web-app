@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { ActionIcon, Group, Stack, Text } from '@svelteuidev/core';
-	import { EnvelopeClosed, GithubLogo } from 'radix-icons-svelte';
-	import type { Member } from '$lib/entities/member/Member';
+	import { ActionIcon, Group, Stack, Text } from "@svelteuidev/core";
+	import { EnvelopeClosed, GithubLogo } from "radix-icons-svelte";
+	import type { Member } from "$lib/entities/member/Member";
 
 	export let member: Member;
 

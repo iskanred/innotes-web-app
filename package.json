@@ -3,6 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"description": "Simple note taking web application",
+	"type": "module",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/iskanred/innotes-web-app"
@@ -42,14 +43,13 @@
 		"vite": "^4.2.1",
 		"vitest": "^0.25.3"
 	},
-	"type": "module",
 	"dependencies": {
 		"@svelteuidev/composables": "^0.11.1",
 		"@svelteuidev/core": "^0.11.1",
 		"@svelteuidev/dates": "^0.11.1",
 		"dayjs": "^1.11.7",
+		"firebase": "^9.6.10",
 		"radix-icons-svelte": "^1.2.1",
-		"svelte-routing": "^1.6.0",
-		"firebase": "^9.6.10"
+		"svelte-routing": "^1.6.0"
 	}
 }
