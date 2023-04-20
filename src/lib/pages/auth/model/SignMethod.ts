@@ -17,7 +17,7 @@ class SignInMethod extends SignMethod {
 	private static _instance: SignInMethod;
 
 	private constructor() {
-		super("Already have an account?", "Sign In", "Log in");
+		super("Not have an account yet? Sign up", "Sign In", "Log in");
 	}
 
 	public static get Instance() {
@@ -32,7 +32,7 @@ class SignUpMethod extends SignMethod {
 	private static _instance: SignUpMethod;
 
 	private constructor() {
-		super("Not have account yet?", "Sign Up", "Who are you?");
+		super("Already have an account? Log in", "Sign Up", "Who are you?");
 	}
 
 	public static get Instance() {

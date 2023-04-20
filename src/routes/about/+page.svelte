@@ -2,7 +2,7 @@
 	import { Title } from "@svelteuidev/core";
 	import { base } from "$app/paths";
 	import MemberPage from "$lib/pages/about/ui/MemberPaper.svelte";
-	import type { Member } from "$lib/entities/member/Member";
+	import type { Member } from "$lib/entities/member/model/Member";
 
 	const members: Member[] = [
 		{

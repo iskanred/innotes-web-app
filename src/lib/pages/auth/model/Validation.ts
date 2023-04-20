@@ -1,7 +1,10 @@
 import type { AuthData } from "$lib/pages/auth/model/AuthData";
+import { SignMethod, signUpMethod } from "$lib/pages/auth/model/SignMethod";
 
 const emailRegex =
 	/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+const PASSWORD_MIN_LENGTH = 6;
 
 export interface ValidationErrors {
 	emailErrorText: string;
@@ -10,12 +13,13 @@ export interface ValidationErrors {
 	hasErrors: boolean;
 }
 
-export function validateAuthData(authData: AuthData): ValidationErrors {
+export function validateAuthData(authData: AuthData, signMethod: SignMethod): ValidationErrors {
 	const emailErrorText = validateEmail(authData.email);
 	const passwordErrorText = validatePassword(authData.password);
 	const passwordConfirmErrorText = validateConfirmPassword(
 		authData.password,
-		authData.passwordConfirm
+		authData.passwordConfirm,
+		signMethod
 	);
 
 	return {
@@ -40,18 +44,24 @@ function validatePassword(password: string): string {
 	if (!password) {
 		return "Password is required!";
 	}
-	if (password.length < 4) {
-		return "Password length must be at least 4 characters";
+	if (password.length < PASSWORD_MIN_LENGTH) {
+		return `At least ${PASSWORD_MIN_LENGTH} characters`;
 	}
 	return "";
 }
 
-function validateConfirmPassword(password: string, confirmPassword: string): string {
-	if (!confirmPassword) {
-		return "Password confirmation is required!";
-	}
-	if (confirmPassword !== password) {
-		return "Passwords do not match!";
+function validateConfirmPassword(
+	password: string,
+	confirmPassword: string,
+	signMethod: SignMethod
+): string {
+	if (signMethod === signUpMethod) {
+		if (!confirmPassword) {
+			return "Password confirmation is required!";
+		}
+		if (confirmPassword !== password) {
+			return "Passwords do not match!";
+		}
 	}
 	return "";
 }

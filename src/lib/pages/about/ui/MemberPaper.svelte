@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Image, Paper } from "@svelteuidev/core";
-	import type { Member } from "$lib/entities/member/Member";
+	import type { Member } from "$lib/entities/member/model/Member";
 	import MemberInfoPart from "$lib/pages/about/ui/MemberInfoPart.svelte";
 
 	export let member: Member;

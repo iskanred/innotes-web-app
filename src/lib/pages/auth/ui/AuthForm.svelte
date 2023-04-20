@@ -1,22 +1,28 @@
 <script lang="ts">
 	import { Button, Stack, Text, TextInput, Title } from "@svelteuidev/core";
 	import { EnvelopeClosed, EyeClosed, EyeOpen } from "radix-icons-svelte";
+
 	import { signInMethod, SignMethod, signUpMethod } from "$lib/pages/auth/model/SignMethod";
 	import type { AuthData } from "$lib/pages/auth/model/AuthData";
 	import type { ValidationErrors } from "$lib/pages/auth/model/Validation";
 	import { validateAuthData } from "$lib/pages/auth/model/Validation";
+
+	import { authHandlers, authStore } from "$lib/processes/auth/AuthStore";
+	import { notesPagePath } from "$lib/shared/path/model/Paths";
 
 	let authData: AuthData = {
 		email: "",
 		password: "",
 		passwordConfirm: ""
 	};
+
 	let validationErrors: ValidationErrors = {
 		emailErrorText: "",
 		passwordErrorText: "",
 		passwordConfirmErrorText: "",
 		hasErrors: false
 	};
+
 	let signMethod: SignMethod = signInMethod;
 
 	function handleChangeSignType() {
@@ -27,16 +33,39 @@
 		}
 	}
 
-	function handleSubmit() {
-		validationErrors = validateAuthData(authData);
-		if (!validationErrors.hasErrors) {
-			console.log("TODO");
+	function authUser() {
+		if (signMethod === signInMethod) {
+			authHandlers
+				.login(authData.email, authData.password)
+				.catch((_) => {
+					alert("User with such an email and a password does not exist!");
+				})
+				.then(() => {
+					handleLogIn();
+				});
+		} else if (signMethod === signUpMethod) {
+			authHandlers
+				.signup(authData.email, authData.password)
+				.catch((_) => {
+					alert("Sorry! Something went wrong...");
+				})
+				.then(() => {
+					handleLogIn();
+				});
 		}
 	}
 
-	function onKeyDown(event: KeyboardEvent) {
-		if (event.key === "Enter") {
-			handleSubmit();
+	function handleLogIn() {
+		if ($authStore.currentUser) {
+			window.location.href = notesPagePath;
+		}
+	}
+
+	function handleSubmit() {
+		validationErrors = validateAuthData(authData, signMethod);
+		if (!validationErrors.hasErrors) {
+			authUser();
+			handleLogIn();
 		}
 	}
 </script>
@@ -47,7 +76,8 @@
 	</Title>
 </div>
 
-<div id="stack">
+<!-- Custom validation is used -->
+<form novalidate>
 	<Stack spacing={24} align="stretch">
 		<TextInput
 			placeholder="Enter e-mail"
@@ -95,14 +125,14 @@
 			{signMethod.questionToChangeMethod}
 		</Text>
 	</Stack>
-</div>
+</form>
 
 <style>
 	#title {
 		margin-bottom: 72px;
 	}
 
-	#stack {
+	form {
 		min-width: 18vw;
 	}
 </style>

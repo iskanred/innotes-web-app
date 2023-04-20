@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/linux,macos,svelte,windows,webstorm+all,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=linux,macos,svelte,windows,webstorm+all,visualstudiocode
 
+.env
+
 ### Frontend ###
 build/
 node_modules/
