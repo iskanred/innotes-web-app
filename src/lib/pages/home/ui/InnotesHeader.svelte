@@ -11,11 +11,11 @@
 	import { auth } from "$lib/processes/auth/FirebaseClient";
 	import { onMount } from "svelte";
 
-	let loggedIn = false;
+	let notLoggedIn = false;
 
 	onMount(() => {
 		return auth.onAuthStateChanged((user) => {
-			loggedIn = !!user;
+			notLoggedIn = !user;
 			authStore.update((current) => {
 				return { ...current, isLoading: false, currentUser: user };
 			});
@@ -23,16 +23,13 @@
 	});
 
 	function handleAuthClick() {
-		if (loggedIn) {
+		if (!notLoggedIn) {
 			authHandlers.logout();
 		}
 		window.location.href = authPagePath;
 	}
 </script>
 
-<!--{#if $authStore.currentUser}-->
-<!--    {$authStore.currentUser}-->
-<!--    {loggedIn}-->
 <Header height="100%">
 	<Paper shadow="sm">
 		<nav>
@@ -41,18 +38,12 @@
 			<HeaderButton href={aboutPagePath} text="About" />
 			<Button on:click={handleAuthClick} size={54} variant="outline" ripple color="gray">
 				<Text size={24} weight="bold" color="blue">
-					{loggedIn ? "Log out" : "Log in"}
+					{notLoggedIn ? "Log in" : "Log out"}
 				</Text>
 			</Button>
 		</nav>
 	</Paper>
 </Header>
-
-<!--{:else}-->
-<!--    {$authStore.currentUser}-->
-<!--    {loggedIn}-->
-<!--    Loading...-->
-<!--{/if}-->
 
 <style>
 	nav {
