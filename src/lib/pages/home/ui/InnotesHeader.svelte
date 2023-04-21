@@ -8,22 +8,15 @@
 		notesPagePath
 	} from "$lib/shared/path/model/Paths.js";
 	import { authHandlers, authStore } from "$lib/processes/auth/AuthStore";
-	import { auth } from "$lib/processes/auth/FirebaseClient";
 	import { onMount } from "svelte";
-
-	let notLoggedIn = false;
+	import { setAuthStateHandler } from "$lib/processes/auth/AuthStateHandler";
 
 	onMount(() => {
-		return auth.onAuthStateChanged((user) => {
-			notLoggedIn = !user;
-			authStore.update((current) => {
-				return { ...current, isLoading: false, currentUser: user };
-			});
-		});
+		return setAuthStateHandler();
 	});
 
 	function handleAuthClick() {
-		if (!notLoggedIn) {
+		if ($authStore.loggedIn) {
 			authHandlers.logout();
 		}
 		window.location.href = authPagePath;
@@ -38,7 +31,7 @@
 			<HeaderButton href={aboutPagePath} text="About" />
 			<Button on:click={handleAuthClick} size={54} variant="outline" ripple color="gray">
 				<Text size={24} weight="bold" color="blue">
-					{notLoggedIn ? "Log in" : "Log out"}
+					{$authStore.loggedIn ? "Log out" : "Log in"}
 				</Text>
 			</Button>
 		</nav>
