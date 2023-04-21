@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 
 interface UserAuthState {
-	isLoading: boolean;
+	loggedIn: boolean;
 	currentUser: any;
 }
 
@@ -20,7 +20,7 @@ interface AuthHandlers {
 }
 
 const userAuthState: UserAuthState = {
-	isLoading: true,
+	loggedIn: false,
 	currentUser: null
 };
 

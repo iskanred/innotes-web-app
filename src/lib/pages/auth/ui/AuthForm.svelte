@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button, Stack, Text, TextInput, Title } from "@svelteuidev/core";
-	import { EnvelopeClosed, EyeClosed, EyeOpen } from "radix-icons-svelte";
+	import { Alert, Button, Modal, Stack, Text, TextInput, Title } from "@svelteuidev/core";
+	import { EnvelopeClosed, EyeClosed, EyeOpen, InfoCircled } from "radix-icons-svelte";
 
 	import { signInMethod, SignMethod, signUpMethod } from "$lib/pages/auth/model/SignMethod";
 	import type { AuthData } from "$lib/pages/auth/model/AuthData";
@@ -25,6 +25,8 @@
 
 	let signMethod: SignMethod = signInMethod;
 
+	let errorText = "";
+
 	function handleChangeSignType() {
 		if (signMethod === signInMethod) {
 			signMethod = signUpMethod;
@@ -37,8 +39,8 @@
 		if (signMethod === signInMethod) {
 			authHandlers
 				.login(authData.email, authData.password)
-				.catch((_) => {
-					alert("User with such an email and a password does not exist!");
+				.catch(() => {
+					errorText = "User with such an email and a password does not exist!";
 				})
 				.then(() => {
 					handleLogIn();
@@ -46,8 +48,8 @@
 		} else if (signMethod === signUpMethod) {
 			authHandlers
 				.signup(authData.email, authData.password)
-				.catch((_) => {
-					alert("Sorry! Something went wrong...");
+				.catch(() => {
+					errorText = "Sorry! Something went wrong...";
 				})
 				.then(() => {
 					handleLogIn();
@@ -56,7 +58,8 @@
 	}
 
 	function handleLogIn() {
-		if ($authStore.currentUser) {
+		if ($authStore.loggedIn) {
+			console.log($authStore.currentUser);
 			window.location.href = notesPagePath;
 		}
 	}
@@ -79,6 +82,24 @@
 <!-- Custom validation is used -->
 <form novalidate>
 	<Stack spacing={24} align="stretch">
+		{#if errorText}
+			<Modal
+				centered
+				opened
+				on:close={() => (errorText = "")}
+				withCloseButton={false}
+				size="lg"
+			>
+				<Alert
+					icon={InfoCircled}
+					title="Oops!"
+					on:close={() => (errorText = "")}
+					withCloseButton
+				>
+					{errorText}
+				</Alert>
+			</Modal>
+		{/if}
 		<TextInput
 			placeholder="Enter e-mail"
 			label="E-mail"
