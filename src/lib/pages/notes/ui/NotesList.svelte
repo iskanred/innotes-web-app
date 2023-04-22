@@ -35,7 +35,7 @@
 	{/each}
 	<!-- TODO: integrate single-note page -->
 	<Grid.Col {span}>
-		<Button override={{ height: 200 }} ripple variant="outline" color="blue" fullSize>
+		<Button override={{ height: 190 }} ripple variant="outline" color="blue" fullSize>
 			<Text size={32} align="center" color="blue">+ Note</Text>
 		</Button>
 	</Grid.Col>
