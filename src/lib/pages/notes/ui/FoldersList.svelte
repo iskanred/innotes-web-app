@@ -26,7 +26,7 @@
 
 	function handleAddNewFolder() {
 		if (validateFolderName()) {
-			// here we need to create a new folder in firestore
+			// TODO: here we need to create a new folder in firestore and only then add to interface
 			folders.push(new Folder("dummy", newFolderName));
 			folders = folders;
 			newFolderAdding = false;
@@ -36,7 +36,8 @@
 	}
 
 	function handleRemoveFolder(folderId: string) {
-		// here we need to remove the folder from firestore
+		// TODO: here we need to remove the folder from firestore and only then remove from interface
+		// note: Default folder cannot be removed
 		folders = folders.filter((folder) => folder.id != folderId);
 	}
 </script>
