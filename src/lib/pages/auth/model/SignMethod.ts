@@ -17,7 +17,7 @@ class SignInMethod extends SignMethod {
 	private static _instance: SignInMethod;
 
 	private constructor() {
-		super("Not have an account yet? Sign up", "Sign In", "Log in");
+		super("Don't have an account yet? Sign up", "Sign In", "Log in");
 	}
 
 	public static get Instance() {
