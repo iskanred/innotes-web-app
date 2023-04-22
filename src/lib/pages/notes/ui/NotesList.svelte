@@ -34,8 +34,8 @@
 		</Grid.Col>
 	{/each}
 	<Grid.Col {span}>
-		<Button override={{ height: 200 }} ripple variant="light" color="blue" fullSize>
-			<Text size={32} align="center" weight="bold">+ Note</Text>
+		<Button override={{ height: 200 }} ripple variant="outline" color="blue" fullSize>
+			<Text size={32} align="center" color="blue">+ Note</Text>
 		</Button>
 	</Grid.Col>
 </Grid>
