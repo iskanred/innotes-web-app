@@ -21,7 +21,7 @@
 		},
 		{
 			name: "Andrey Plekhov",
-			pathToPhoto: `${base}/images/template.png`,
+			pathToPhoto: `${base}/images/andrey.jpg`,
 			role: "Frontend Developer",
 			email: "a.plekhov@innopolis.university",
 			github: "https://github.com/Majorro"
