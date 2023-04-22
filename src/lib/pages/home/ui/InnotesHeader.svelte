@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Header, Paper, Text } from "@svelteuidev/core";
+	import { Button, Header, Loader, Paper, Text } from "@svelteuidev/core";
 	import HeaderButton from "$lib/pages/home/ui/HeaderButton.svelte";
 	import {
 		aboutPagePath,
@@ -12,7 +12,12 @@
 	import { setAuthStateHandler } from "$lib/processes/auth/AuthStateHandler";
 	import { goto } from "$app/navigation";
 
+	let isAuthLoading = true;
+
 	onMount(() => {
+		setTimeout(() => {
+			isAuthLoading = false;
+		}, 700);
 		setAuthStateHandler();
 	});
 
@@ -30,10 +35,22 @@
 			<HeaderButton href={homePagePath} text="Innotes" />
 			<HeaderButton href={notesPagePath} text="My notes" />
 			<HeaderButton href={aboutPagePath} text="About" />
-			<Button on:click={handleAuthClick} size={54} variant="outline" ripple color="gray">
-				<Text size={24} weight="bold" color="blue">
-					{$authStore.loggedIn ? "Log out" : "Log in"}
-				</Text>
+			<Button
+				on:click={handleAuthClick}
+				disabled={!$authStore.loggedIn && isAuthLoading}
+				size={54}
+				variant="outline"
+				ripple
+				color="gray"
+				override={{ width: 200 }}
+			>
+				{#if $authStore.loggedIn || !isAuthLoading}
+					<Text size={24} weight="bold" color="blue">
+						{$authStore.loggedIn ? "Log out" : "Log in"}
+					</Text>
+				{:else}
+					<Loader variant="dots" />
+				{/if}
 			</Button>
 		</nav>
 	</Paper>
