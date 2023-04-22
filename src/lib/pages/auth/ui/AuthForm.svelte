@@ -9,6 +9,7 @@
 
 	import { authHandlers, authStore } from "$lib/processes/auth/AuthStore";
 	import { notesPagePath } from "$lib/shared/path/model/Paths";
+	import { goto } from "$app/navigation";
 
 	let authData: AuthData = {
 		email: "",
@@ -60,7 +61,7 @@
 	function handleLogIn() {
 		if ($authStore.loggedIn) {
 			console.log($authStore.currentUser);
-			window.location.href = notesPagePath;
+			goto(notesPagePath);
 		}
 	}
 

@@ -9,7 +9,9 @@
 </script>
 
 <SvelteUIProvider withNormalizeCSS withGlobalStyles themeObserver={isDark ? "dark" : "light"}>
-	<InnotesHeader />
+	<div id="header">
+		<InnotesHeader />
+	</div>
 	<!--    <Stack align='center'>-->
 	<!--&lt;!&ndash;        <Switch on:change={toggleTheme} />&ndash;&gt;-->
 	<!--    </Stack>-->

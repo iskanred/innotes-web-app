@@ -6,10 +6,11 @@ import {
 	signInWithEmailAndPassword,
 	signOut
 } from "firebase/auth";
+import type firebase from "firebase/compat";
 
 interface UserAuthState {
 	loggedIn: boolean;
-	currentUser: any;
+	currentUser: firebase.User | any;
 }
 
 interface AuthHandlers {

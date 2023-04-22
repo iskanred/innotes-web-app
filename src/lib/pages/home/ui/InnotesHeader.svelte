@@ -10,16 +10,17 @@
 	import { authHandlers, authStore } from "$lib/processes/auth/AuthStore";
 	import { onMount } from "svelte";
 	import { setAuthStateHandler } from "$lib/processes/auth/AuthStateHandler";
+	import { goto } from "$app/navigation";
 
 	onMount(() => {
-		return setAuthStateHandler();
+		setAuthStateHandler();
 	});
 
 	function handleAuthClick() {
 		if ($authStore.loggedIn) {
 			authHandlers.logout();
 		}
-		window.location.href = authPagePath;
+		goto(authPagePath);
 	}
 </script>
 
