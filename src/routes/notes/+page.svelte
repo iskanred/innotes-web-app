@@ -7,6 +7,7 @@
 	import { Folder } from "$lib/entities/folder/model/Folder";
 	import NotesList from "$lib/pages/notes/ui/NotesList.svelte";
 	import { Note } from "$lib/entities/notes/model/Note";
+	import { Loader } from "@svelteuidev/core";
 
 	onMount(() => {
 		setTimeout(() => {
@@ -19,6 +20,7 @@
 	// id of default folder
 	let currentFolderId = "id1";
 
+	// TODO: load folders from firestore
 	let folders = [
 		new Folder("id1", "Default"),
 		new Folder("id2", "Home"),
@@ -27,7 +29,7 @@
 	];
 
 	function getNotesByFolderId() {
-		// go to firestore and get all notes by folder id
+		// TODO: here we need to go to firestore and get all notes by folder id
 		if (currentFolderId == "id1") {
 			return [
 				new Note(
@@ -52,12 +54,18 @@
 </script>
 
 <main>
-	<div id="folders">
-		<FoldersList {folders} bind:currentFolderId />
-	</div>
-	<div id="notes">
-		<NotesList notes={currentFolderId ? getNotesByFolderId() : []} />
-	</div>
+	{#if $authStore.loggedIn}
+		<div id="folders">
+			<FoldersList {folders} bind:currentFolderId />
+		</div>
+		<div id="notes">
+			<NotesList notes={currentFolderId ? getNotesByFolderId() : []} />
+		</div>
+	{:else}
+		<div id="loader">
+			<Loader size="xl" variant="dots" />
+		</div>
+	{/if}
 </main>
 
 <style>
@@ -79,5 +87,11 @@
 		margin-right: 30px;
 		margin-left: 30px;
 		margin-top: 30px;
+	}
+	#loader {
+		height: 80vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 </style>
