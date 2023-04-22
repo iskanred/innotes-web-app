@@ -14,7 +14,7 @@
 		},
 		{
 			name: "Alexander Evdokimov",
-			pathToPhoto: `${base}/images/template.png`,
+			pathToPhoto: `${base}/images/aleksandr.jpg`,
 			role: "Frontend Developer",
 			email: "a.evdokimov@innopolis.university",
 			github: "https://github.com/quhaaST"
