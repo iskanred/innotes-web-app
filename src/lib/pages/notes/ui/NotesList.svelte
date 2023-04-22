@@ -65,19 +65,25 @@
 						ripple
 						variant="light"
 						color="blue"
-						fullSize>Open</Button
+						fullSize
 					>
+						Open
+					</Button>
 				</Stack>
 			</Card>
 		</Grid.Col>
 	{/each}
 	<Grid.Col {span}>
-		<Button override={{ height: 190 }}
-                on:click={() => {createNewNote()}}
-                ripple
-                variant="outline"
-                color="blue"
-                fullSize>
+		<Button
+			override={{ height: 190 }}
+			on:click={() => {
+				createNewNote();
+			}}
+			ripple
+			variant="outline"
+			color="blue"
+			fullSize
+		>
 			<Text size={32} align="center" color="blue">+ Note</Text>
 		</Button>
 	</Grid.Col>
