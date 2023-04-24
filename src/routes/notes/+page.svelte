@@ -8,13 +8,14 @@
 	import NotesList from "$lib/pages/notes/ui/NotesList.svelte";
 	import { Note } from "$lib/entities/notes/model/Note";
 	import { Loader } from "@svelteuidev/core";
+	import { AUTH_LOADING_TIMEOUT_MS } from "$lib/shared/constants/model/Constants";
 
 	onMount(() => {
 		setTimeout(() => {
 			if (!$authStore.loggedIn) {
 				goto(authPagePath);
 			}
-		}, 1000);
+		}, AUTH_LOADING_TIMEOUT_MS);
 	});
 
 	// id of default folder
