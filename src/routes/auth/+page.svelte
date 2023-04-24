@@ -18,7 +18,7 @@
 
 <main>
 	{#if isAuthLoading && !$authStore.loggedIn}
-		<Loader variant="dots" />
+		<Loader size="xl" variant="dots" />
 	{:else if $authStore.loggedIn}
 		<div style="display: none">
 			{goto(notesPagePath)}
