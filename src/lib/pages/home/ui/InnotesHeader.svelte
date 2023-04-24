@@ -11,13 +11,14 @@
 	import { onMount } from "svelte";
 	import { setAuthStateHandler } from "$lib/processes/auth/AuthStateHandler";
 	import { goto } from "$app/navigation";
+	import { AUTH_LOADING_TIMEOUT_MS } from "$lib/shared/constants/model/Constants";
 
 	let isAuthLoading = true;
 
 	onMount(() => {
 		setTimeout(() => {
 			isAuthLoading = false;
-		}, 700);
+		}, AUTH_LOADING_TIMEOUT_MS);
 		setAuthStateHandler();
 	});
 
