@@ -1,7 +1,6 @@
 import type { User } from "../model/User";
 import {
 	DocumentReference,
-	updateDoc,
 	type DocumentData,
 	getDoc,
 	doc,
