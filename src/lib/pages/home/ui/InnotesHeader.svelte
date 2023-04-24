@@ -7,9 +7,9 @@
 		homePagePath,
 		notesPagePath
 	} from "$lib/shared/path/model/Paths.js";
-	import { authHandlers, authStore } from "$lib/processes/auth/AuthStore";
+	import { authHandlers, authStore } from "$lib/shared/auth/AuthStore";
 	import { onMount } from "svelte";
-	import { setAuthStateHandler } from "$lib/processes/auth/AuthStateHandler";
+	import { setAuthStateHandler } from "$lib/shared/auth/AuthStateHandler";
 	import { goto } from "$app/navigation";
 	import { AUTH_LOADING_TIMEOUT_MS } from "$lib/shared/constants/model/Constants";
 

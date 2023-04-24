@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { ActionIcon, Button, Divider, Modal, Text, TextInput } from "@svelteuidev/core";
-	import { Folder } from "$lib/entities/folder/model/Folder";
 	import { Trash } from "radix-icons-svelte";
+	import { addFolder, deleteFolder, getFolderByRef } from "$lib/entities/folder/api/crud";
+	import { authStore } from "$lib/shared/auth/AuthStore";
+	import type { Folder } from "$lib/entities/folder/model/Folder";
+	import type { DocumentData, DocumentSnapshot } from "firebase/firestore";
 
 	const FOLDER_NAME_MAX_LENGTH = 15;
 
 	export let folders: Folder[] = [];
-	export let currentFolderId = "";
+	export let currentFolderId: string | undefined;
 
 	let newFolderAdding = false;
 	let newFolderName = "";
@@ -26,19 +29,20 @@
 
 	function handleAddNewFolder() {
 		if (validateFolderName()) {
-			// TODO: here we need to create a new folder in firestore and only then add to interface
-			folders.push(new Folder("dummy", newFolderName));
-			folders = folders;
-			newFolderAdding = false;
-			newFolderName = "";
+			addFolder($authStore, newFolderName).then((folder) => {
+				folders.push(folder);
+				folders = folders;
+				newFolderAdding = false;
+				newFolderName = "";
+			});
 			return;
 		}
 	}
 
-	function handleRemoveFolder(folderId: string) {
-		// TODO: here we need to remove the folder from firestore and only then remove from interface
-		// note: Default folder cannot be removed
-		folders = folders.filter((folder) => folder.id != folderId);
+	function handleRemoveFolder(folderId?: string) {
+		deleteFolder($authStore, folderId).then(() => {
+			folders = folders.filter((folder) => folder.id != folderId);
+		});
 	}
 </script>
 

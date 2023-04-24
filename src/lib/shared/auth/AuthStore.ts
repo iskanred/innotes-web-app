@@ -1,5 +1,4 @@
 import { writable } from "svelte/store";
-import { auth } from "$lib/processes/auth/FirebaseClient";
 import {
 	createUserWithEmailAndPassword,
 	sendPasswordResetEmail,
@@ -7,8 +6,9 @@ import {
 	signOut
 } from "firebase/auth";
 import type firebase from "firebase/compat";
+import { auth } from "$lib/shared/FirebaseClient";
 
-interface UserAuthState {
+export interface UserAuthState {
 	loggedIn: boolean;
 	currentUser: firebase.User | any;
 }

@@ -4,53 +4,36 @@
 	import { authPagePath } from "$lib/shared/path/model/Paths";
 	import { goto } from "$app/navigation";
 	import FoldersList from "$lib/pages/notes/ui/FoldersList.svelte";
-	import { Folder } from "$lib/entities/folder/model/Folder";
 	import NotesList from "$lib/pages/notes/ui/NotesList.svelte";
-	import { Note } from "$lib/entities/notes/model/Note";
 	import { Loader } from "@svelteuidev/core";
+	import { getFolders } from "$lib/entities/folder/api/crud";
+	import { getNotes } from "$lib/entities/notes/api/crud";
+	import type { Folder } from "$lib/entities/folder/model/Folder";
+	import type { Note } from "$lib/entities/notes/model/Note";
 	import { AUTH_LOADING_TIMEOUT_MS } from "$lib/shared/constants/model/Constants";
 
 	onMount(() => {
 		setTimeout(() => {
 			if (!$authStore.loggedIn) {
 				goto(authPagePath);
+			} else {
+				getFolders($authStore).then((dbFolders) => {
+					folders = dbFolders;
+				});
 			}
 		}, AUTH_LOADING_TIMEOUT_MS);
 	});
 
-	// id of default folder
-	let currentFolderId = "id1";
+	let currentFolderId: string;
+	let folders: Folder[];
+	let notes: Note[];
 
-	// TODO: load folders from firestore
-	let folders = [
-		new Folder("id1", "Default"),
-		new Folder("id2", "Home"),
-		new Folder("id3", "Study"),
-		new Folder("id4", "Work")
-	];
-
-	function getNotesByFolderId() {
-		// TODO: here we need to go to firestore and get all notes by folder id
-		if (currentFolderId == "id1") {
-			return [
-				new Note(
-					"id1",
-					"Clean",
-					"Wash dish Lalalf rfejrifjwerjfweorijfweoirjfoweirjfowerjf rwfjerjf werjf wererfwer wfer",
-					currentFolderId
-				),
-				new Note("id1", "Clean", "Wash dish", currentFolderId),
-				new Note("id1", "Clean", "Wash dish", currentFolderId),
-				new Note("id1", "Clean", "Wash dish", currentFolderId),
-				new Note("id1", "Clean", "Wash dish", currentFolderId),
-				new Note("id1", "Clean", "Wash dish", currentFolderId),
-				new Note("id1", "Clean", "Wash dish", currentFolderId),
-				new Note("id1", "Clean", "Wash dish", currentFolderId),
-				new Note("id1", "Clean", "Wash dish", currentFolderId),
-				new Note("id1", "Clean", "Wash dish", currentFolderId)
-			];
-		}
-		return [];
+	$: if ($authStore.loggedIn && currentFolderId) {
+		getNotes($authStore, currentFolderId).then((dbNotes) => {
+			notes = dbNotes;
+		});
+	} else {
+		notes = [];
 	}
 </script>
 
@@ -60,7 +43,9 @@
 			<FoldersList {folders} bind:currentFolderId />
 		</div>
 		<div id="notes">
-			<NotesList notes={currentFolderId ? getNotesByFolderId() : []} />
+			{#if currentFolderId}
+				<NotesList {notes} {currentFolderId} />
+			{/if}
 		</div>
 	{:else}
 		<div id="loader">
