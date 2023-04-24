@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { ActionIcon, Button, Divider, Modal, Text, TextInput } from "@svelteuidev/core";
 	import { Trash } from "radix-icons-svelte";
-	import { addFolder, deleteFolder, getFolderByRef } from "$lib/entities/folder/api/crud";
+	import { addFolder, deleteFolder } from "$lib/entities/folder/api/crud";
 	import { authStore } from "$lib/shared/auth/AuthStore";
 	import type { Folder } from "$lib/entities/folder/model/Folder";
-	import type { DocumentData, DocumentSnapshot } from "firebase/firestore";
 
 	const FOLDER_NAME_MAX_LENGTH = 15;
 
