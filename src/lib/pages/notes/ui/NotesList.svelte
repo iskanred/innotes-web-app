@@ -1,13 +1,17 @@
 <script lang="ts">
-	import { Button, Card, Grid, Stack, Text } from "@svelteuidev/core";
+	import { ActionIcon, Button, Card, Grid, Stack, Text } from "@svelteuidev/core";
 	import type { Note } from "$lib/entities/notes/model/Note";
-	import SingleNoteContent from "$lib/pages/single-note/ui/SingleNoteContent.svelte";
+	import NoteModal from "$lib/pages/note-modal/ui/NoteModal.svelte";
+	import { addNote, deleteNote, updateNote } from "$lib/entities/notes/api/crud";
+	import { authStore } from "$lib/shared/auth/AuthStore";
+	import { Trash } from "radix-icons-svelte";
 
 	const CONTENT_MAX_LENGTH = 70;
 
 	const span = 4;
 
 	export let notes: Note[] = [];
+	export let currentFolderId: string;
 
 	let selectedNote: Note;
 	let shouldOpenNote = false;
@@ -27,23 +31,23 @@
 	function onNoteClosed(note: Note | null) {
 		shouldOpenNote = false;
 
-		// TODO: сохранить изменения данных в базе, здесб приходит уже новый ноут или null, если надо его удалить
-		// TODO: id и folderId можно найти в selectedNote
+		if (note) {
+			updateNote($authStore, note);
+		}
 	}
 
 	function createNewNote() {
-		// TODO: дать новый id и folderId
-		let newNote: Note = {
-			id: "-1",
-			title: "New note",
-			content: "",
-			folderId: "-1"
-		};
+		addNote($authStore, "New note", "", currentFolderId).then((note) => {
+			notes.push(note);
+			notes = notes;
+			openNote(note);
+		});
+	}
 
-		// TODO: добавить новую запись и рефрешнуть страницу
-		notes.push(newNote);
-
-		openNote(newNote);
+	function handleRemoveNote(note: Note) {
+		deleteNote($authStore, note.folderId, note.id).then(() => {
+			notes = notes.filter((n) => n.id !== note.id);
+		});
 	}
 </script>
 
@@ -52,10 +56,17 @@
 		<Grid.Col {span}>
 			<Card shadow="xs" withBorder override={{ height: 190 }}>
 				<Stack override={{ height: 160 }} justify="space-between">
-					<Text size={32} weight="bold" align="center">
+					<ActionIcon
+						on:click={() => {
+							handleRemoveNote(note);
+						}}
+					>
+						<Trash size={28} />
+					</ActionIcon>
+					<Text size={24} weight="bold" align="center">
 						{note.title}
 					</Text>
-					<Text size={20}>
+					<Text size={16}>
 						{stripContent(note.content)}
 					</Text>
 					<Button
@@ -89,6 +100,6 @@
 	</Grid.Col>
 
 	{#if shouldOpenNote}
-		<SingleNoteContent note={selectedNote} onClosed={onNoteClosed} />
+		<NoteModal note={selectedNote} onClosed={onNoteClosed} />
 	{/if}
 </Grid>

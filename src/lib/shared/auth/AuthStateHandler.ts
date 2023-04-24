@@ -1,5 +1,5 @@
-import { authStore } from "$lib/processes/auth/AuthStore";
-import { auth } from "$lib/processes/auth/FirebaseClient";
+import { authStore } from "$lib/shared/auth/AuthStore";
+import { auth } from "$lib/shared/FirebaseClient";
 import type firebase from "firebase/compat";
 
 export function setAuthStateHandler(): firebase.Unsubscribe {
