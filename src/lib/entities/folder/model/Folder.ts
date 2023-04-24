@@ -1,9 +1,7 @@
-export class Folder {
-	id: string;
-	name: string;
+import type { Note } from "$lib/entities/notes/model/Note";
 
-	constructor(id: string, name: string) {
-		this.id = id;
-		this.name = name;
-	}
+export interface Folder {
+	id?: string;
+	name: string;
+	notes: Note[];
 }

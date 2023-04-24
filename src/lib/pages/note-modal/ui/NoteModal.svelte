@@ -7,13 +7,8 @@
 
 	let isOpened = true;
 
-	function handleClose(shouldBeDeleted = false) {
-		if (shouldBeDeleted) {
-			onClosed(null);
-		} else {
-			onClosed(note);
-		}
-
+	function handleClose(save = false) {
+		onClosed(save ? note : null);
 		isOpened = false;
 	}
 </script>
@@ -25,10 +20,11 @@
 	</section>
 
 	<Group position="right">
-		<Button on:click={() => handleClose(true)} variant="outline" color="red" size="md">
-			Delete
-		</Button>
-		<Button on:click={() => handleClose()} variant="outline" size="md">Save</Button>
+		<!-- TODO: add input discard on cancel -->
+		<Button on:click={() => handleClose()} variant="outline" size="md">Cancel</Button>
+		<Button on:click={() => handleClose(true)} variant="filled" color="green" size="md"
+			>Save</Button
+		>
 	</Group>
 </Modal>
 

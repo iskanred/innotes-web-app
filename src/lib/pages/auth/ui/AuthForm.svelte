@@ -7,9 +7,10 @@
 	import type { ValidationErrors } from "$lib/pages/auth/model/Validation";
 	import { validateAuthData } from "$lib/pages/auth/model/Validation";
 
-	import { authHandlers, authStore } from "$lib/processes/auth/AuthStore";
+	import { authHandlers, authStore } from "$lib/shared/auth/AuthStore";
 	import { notesPagePath } from "$lib/shared/path/model/Paths";
 	import { goto } from "$app/navigation";
+	import { addUser } from "$lib/entities/user/api/crud";
 
 	let authData: AuthData = {
 		email: "",
@@ -53,6 +54,7 @@
 					errorText = "Sorry! Something went wrong...";
 				})
 				.then(() => {
+					addUser($authStore);
 					handleLogIn();
 				});
 		}
@@ -60,7 +62,6 @@
 
 	function handleLogIn() {
 		if ($authStore.loggedIn) {
-			console.log($authStore.currentUser);
 			goto(notesPagePath);
 		}
 	}
