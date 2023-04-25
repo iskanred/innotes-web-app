@@ -44,6 +44,12 @@ export function getFolderByRef(folderDocRef: DocumentReference): Promise<Folder>
 		.then((folder) => (folder as DocumentSnapshot).data() as Folder);
 }
 
+export function updateFolder($authStore: UserAuthState, folder: Folder): Promise<void> {
+	return updateDoc(getFolderDocRef($authStore, folder.id), {
+		...folder
+	}).catch((error) => console.error("Error updating folder: ", error));
+}
+
 export function deleteFolder($authStore: UserAuthState, folderId?: string): Promise<void> {
 	return deleteDoc(getFolderDocRef($authStore, folderId));
 }
