@@ -17,8 +17,9 @@ if (!getApps().length) {
 	app = initializeApp(firebaseConfig);
 } else {
 	app = getApp();
-	deleteApp(app);
-	app = initializeApp(firebaseConfig);
+	deleteApp(app).then(() => {
+		app = initializeApp(firebaseConfig);
+	});
 }
 
 export const auth = getAuth(app);
