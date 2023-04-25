@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { authStore } from "$lib/processes/auth/AuthStore";
 	import { authPagePath } from "$lib/shared/path/model/Paths";
 	import { goto } from "$app/navigation";
 	import FoldersList from "$lib/pages/notes/ui/FoldersList.svelte";
@@ -12,6 +11,7 @@
 	import type { Note } from "$lib/entities/notes/model/Note";
 	import { AUTH_LOADING_TIMEOUT_MS } from "$lib/shared/constants/model/Constants";
 	import { sortedFolders } from "$lib/entities/folder/service/Extensions";
+	import { authStore } from "$lib/shared/auth/AuthStore";
 
 	let pageLoading = false;
 	let foldersLoaded = false;
