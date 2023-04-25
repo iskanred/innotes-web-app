@@ -3,7 +3,6 @@ import {
 	addDoc,
 	collection,
 	updateDoc,
-	type DocumentData,
 	doc,
 	deleteDoc,
 	getDocs,
@@ -20,7 +19,7 @@ export function addNote(
 	title: string,
 	content: string,
 	folderId?: string
-) {
+): Promise<Note> {
 	const newNote: Note = {
 		title: title,
 		content: content,
@@ -39,12 +38,12 @@ export function addNote(
 	)
 		.catch((error) => console.error("Error adding note: ", error))
 		.then((note) => {
-			const docRef = note as DocumentReference<DocumentData>;
+			const docRef = note as DocumentReference;
 			return updateDoc(docRef, { id: docRef.id }).then(() => getNoteByRef(docRef));
 		});
 }
 
-export function getNotes($authStore: UserAuthState, folderId?: string) {
+export function getNotes($authStore: UserAuthState, folderId?: string): Promise<Note[]> {
 	return getDocs(
 		collection(
 			db,
@@ -56,34 +55,36 @@ export function getNotes($authStore: UserAuthState, folderId?: string) {
 		)
 	)
 		.catch((error) => console.error("Error getting notes: ", error))
-		.then((notes) =>
-			(notes as QuerySnapshot<DocumentData>).docs.map((noteSnap) => noteSnap.data() as Note)
-		);
+		.then((notes) => (notes as QuerySnapshot).docs.map((noteSnap) => noteSnap.data() as Note));
 }
 
-export function getNote($authStore: UserAuthState, folderId?: string, noteId?: string) {
-	return getNoteByRef(getNodeDocRef($authStore, folderId as string, noteId as string));
-}
-
-export function getNoteByRef(noteDocRef: DocumentReference<DocumentData>) {
+export function getNoteByRef(noteDocRef: DocumentReference): Promise<Note> {
 	return getDoc(noteDocRef)
 		.catch((error) => console.error("Error getting note: ", error))
-		.then((note) => (note as DocumentSnapshot<DocumentData>).data() as Note);
+		.then((note) => (note as DocumentSnapshot).data() as Note);
 }
 
-export function updateNote($authStore: UserAuthState, note: Note) {
+export function updateNote($authStore: UserAuthState, note: Note): Promise<void> {
 	return updateDoc(getNodeDocRef($authStore, note.folderId as string, note.id as string), {
 		...note
 	}).catch((error) => console.error("Error updating note: ", error));
 }
 
-export function deleteNote($authStore: UserAuthState, folderId?: string, noteId?: string) {
+export function deleteNote(
+	$authStore: UserAuthState,
+	folderId?: string,
+	noteId?: string
+): Promise<void> {
 	return deleteDoc(getNodeDocRef($authStore, folderId as string, noteId as string)).catch(
 		(error) => console.error("Error deleting note: ", error)
 	);
 }
 
-function getNodeDocRef($authStore: UserAuthState, folderId?: string, noteId?: string) {
+function getNodeDocRef(
+	$authStore: UserAuthState,
+	folderId?: string,
+	noteId?: string
+): DocumentReference {
 	if (!folderId) {
 		throw new Error("Folder id is required");
 	}
