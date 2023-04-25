@@ -1,32 +1,7 @@
 <script lang="ts">
 	import { Title } from "@svelteuidev/core";
-	import { base } from "$app/paths";
 	import MemberPage from "$lib/pages/about/ui/MemberPaper.svelte";
-	import type { Member } from "$lib/entities/member/model/Member";
-
-	const members: Member[] = [
-		{
-			name: "Iskander Nafikov",
-			pathToPhoto: `${base}/images/iskander.jpeg`,
-			role: "Frontend Developer",
-			email: "i.nafikov@innopolis.university",
-			github: "https://github.com/Iskanred"
-		},
-		{
-			name: "Alexander Evdokimov",
-			pathToPhoto: `${base}/images/aleksandr.jpg`,
-			role: "Frontend Developer",
-			email: "a.evdokimov@innopolis.university",
-			github: "https://github.com/quhaaST"
-		},
-		{
-			name: "Andrey Plekhov",
-			pathToPhoto: `${base}/images/andrey.jpg`,
-			role: "Frontend Developer",
-			email: "a.plekhov@innopolis.university",
-			github: "https://github.com/Majorro"
-		}
-	];
+	import { members } from "$lib/pages/about/model/Members.js";
 </script>
 
 <main>
