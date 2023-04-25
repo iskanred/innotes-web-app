@@ -1,46 +1,41 @@
 <script lang="ts">
 	import { ActionIcon, Button, Divider, Modal, Text, TextInput } from "@svelteuidev/core";
 	import { Trash } from "radix-icons-svelte";
-	import { addFolder, deleteFolder } from "$lib/entities/folder/api/crud";
+	import { addFolder, deleteFolder } from "$lib/entities/folder/api/Crud";
 	import { authStore } from "$lib/shared/auth/AuthStore";
 	import type { Folder } from "$lib/entities/folder/model/Folder";
-
-	const FOLDER_NAME_MAX_LENGTH = 15;
+	import { sortedFolders } from "$lib/entities/folder/service/Extensions.js";
+	import { validateFolderName } from "$lib/entities/folder/service/Validation";
 
 	export let folders: Folder[] = [];
 	export let currentFolderId: string | undefined;
+	export let pageLoading = false;
 
 	let newFolderAdding = false;
 	let newFolderName = "";
 	let validationErrorText = "";
 
-	function validateFolderName(): boolean {
-		if (!newFolderName) {
-			validationErrorText = "Folder name is required!";
-			return false;
-		}
-		if (newFolderName.length > FOLDER_NAME_MAX_LENGTH) {
-			validationErrorText = `Folder name must no more than ${FOLDER_NAME_MAX_LENGTH} characters long!`;
-			return false;
-		}
-		return true;
-	}
-
 	function handleAddNewFolder() {
-		if (validateFolderName()) {
+		let validationErrorText = validateFolderName(newFolderName);
+		if (validationErrorText == "") {
+			pageLoading = true;
 			addFolder($authStore, newFolderName).then((folder) => {
 				folders.push(folder);
-				folders = folders;
+				folders = sortedFolders(folders);
+				currentFolderId = folder.id;
 				newFolderAdding = false;
 				newFolderName = "";
+				pageLoading = false;
 			});
-			return;
 		}
 	}
 
 	function handleRemoveFolder(folderId?: string) {
+		pageLoading = true;
 		deleteFolder($authStore, folderId).then(() => {
-			folders = folders.filter((folder) => folder.id != folderId);
+			folders = sortedFolders(folders.filter((folder) => folder.id != folderId));
+			currentFolderId = folders && folders.length > 0 ? folders[0].id : undefined;
+			pageLoading = false;
 		});
 	}
 </script>
@@ -58,6 +53,7 @@
 			size={60}
 			variant="subtle"
 			color="gray"
+			disabled={folder.id === currentFolderId}
 			on:click={() => {
 				currentFolderId = folder.id;
 			}}
@@ -81,7 +77,7 @@
 	{#if newFolderAdding}
 		<Modal
 			centered
-			opened={newFolderAdding}
+			opened={!pageLoading && newFolderAdding}
 			on:close={() => {
 				newFolderAdding = false;
 				validationErrorText = "";
@@ -92,10 +88,10 @@
 			<div id="modal">
 				<Text size={24}>Type new folder name</Text>
 				<TextInput
+					bind:value={newFolderName}
 					on:click={() => {
 						validationErrorText = "";
 					}}
-					bind:value={newFolderName}
 					error={validationErrorText}
 					required
 				/>
