@@ -1,40 +1,29 @@
 <script lang="ts">
-	import { ActionIcon, Button, Divider, Modal, Text, TextInput } from "@svelteuidev/core";
-	import { Trash } from "radix-icons-svelte";
-	import { addFolder, deleteFolder } from "$lib/entities/folder/api/Crud";
+	import { ActionIcon, Button, Divider, Group, Text } from "@svelteuidev/core";
+	import { Pencil1, Trash } from "radix-icons-svelte";
+	import { deleteFolder } from "$lib/entities/folder/api/Crud";
 	import { authStore } from "$lib/shared/auth/AuthStore";
 	import type { Folder } from "$lib/entities/folder/model/Folder";
 	import { sortedFolders } from "$lib/entities/folder/service/Extensions.js";
-	import { validateFolderName } from "$lib/entities/folder/service/Validation";
+	import FolderModal from "$lib/pages/notes/ui/FolderModal.svelte";
 
 	export let folders: Folder[] = [];
 	export let currentFolderId: string | undefined;
+	export let selectedFolder: Folder | null = null;
 	export let pageLoading = false;
 
-	let newFolderAdding = false;
-	let newFolderName = "";
-	let validationErrorText = "";
+	let shouldOpenModal = false;
 
-	function handleAddNewFolder() {
-		let validationErrorText = validateFolderName(newFolderName);
-		if (validationErrorText == "") {
-			pageLoading = true;
-			addFolder($authStore, newFolderName).then((folder) => {
-				folders.push(folder);
-				folders = sortedFolders(folders);
-				currentFolderId = folder.id;
-				newFolderAdding = false;
-				newFolderName = "";
-				pageLoading = false;
-			});
-		}
+	function handleOpenModal(folder: Folder | null = null) {
+		selectedFolder = folder;
+		shouldOpenModal = true;
 	}
 
 	function handleRemoveFolder(folderId?: string) {
 		pageLoading = true;
 		deleteFolder($authStore, folderId).then(() => {
 			folders = sortedFolders(folders.filter((folder) => folder.id != folderId));
-			currentFolderId = folders && folders.length > 0 ? folders[0].id : undefined;
+			currentFolderId = (folders && folders.length) > 0 ? folders[0].id : undefined;
 			pageLoading = false;
 		});
 	}
@@ -42,16 +31,19 @@
 
 <div id="main-content">
 	{#each folders as folder}
-		<ActionIcon
-			on:click={() => {
-				handleRemoveFolder(folder.id);
-			}}
-			override={{
-				marginLeft: 10
-			}}
-		>
-			<Trash size={28} />
-		</ActionIcon>
+		<Group spacing="xs">
+			<ActionIcon
+				on:click={() => handleRemoveFolder(folder.id)}
+				override={{
+					marginLeft: 10
+				}}
+			>
+				<Trash size={28} />
+			</ActionIcon>
+			<ActionIcon on:click={() => handleOpenModal(folder)}>
+				<Pencil1 size={24} />
+			</ActionIcon>
+		</Group>
 		<Button
 			size={60}
 			variant="subtle"
@@ -74,50 +66,25 @@
 	<Button
 		variant="subtle"
 		ripple
-		on:click={() => {
-			newFolderAdding = true;
-		}}
+		on:click={() => handleOpenModal()}
 		override={{
 			marginLeft: 20
 		}}
 	>
 		<Text size={24} color="blue">+ Folder</Text>
 	</Button>
-	{#if newFolderAdding}
-		<Modal
-			centered
-			opened={!pageLoading && newFolderAdding}
-			on:close={() => {
-				newFolderAdding = false;
-				validationErrorText = "";
-			}}
-			withCloseButton
-			size="lg"
-		>
-			<div id="modal">
-				<Text size={24}>Type new folder name</Text>
-				<TextInput
-					bind:value={newFolderName}
-					on:click={() => {
-						validationErrorText = "";
-					}}
-					error={validationErrorText}
-					required
-				/>
-				<Button on:click={handleAddNewFolder}>Apply</Button>
-			</div>
-		</Modal>
-	{/if}
+	<FolderModal
+		bind:selectedFolder
+		bind:currentFolderId
+		bind:opened={shouldOpenModal}
+		bind:folders
+		bind:pageLoading
+	/>
 </div>
 
 <style>
 	#main-content {
 		height: 100%;
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-	}
-	#modal {
 		display: flex;
 		flex-direction: column;
 		gap: 10px;

@@ -65,7 +65,7 @@ export function getNoteByRef(noteDocRef: DocumentReference): Promise<Note> {
 }
 
 export function updateNote($authStore: UserAuthState, note: Note): Promise<void> {
-	return updateDoc(getNodeDocRef($authStore, note.folderId as string, note.id as string), {
+	return updateDoc(getNoteDocRef($authStore, note.folderId as string, note.id as string), {
 		...note
 	}).catch((error) => console.error("Error updating note: ", error));
 }
@@ -75,12 +75,12 @@ export function deleteNote(
 	folderId?: string,
 	noteId?: string
 ): Promise<void> {
-	return deleteDoc(getNodeDocRef($authStore, folderId as string, noteId as string)).catch(
+	return deleteDoc(getNoteDocRef($authStore, folderId as string, noteId as string)).catch(
 		(error) => console.error("Error deleting note: ", error)
 	);
 }
 
-function getNodeDocRef(
+function getNoteDocRef(
 	$authStore: UserAuthState,
 	folderId?: string,
 	noteId?: string
