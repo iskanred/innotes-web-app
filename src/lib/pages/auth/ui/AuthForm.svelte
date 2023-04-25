@@ -4,8 +4,8 @@
 
 	import { signInMethod, SignMethod, signUpMethod } from "$lib/pages/auth/model/SignMethod";
 	import type { AuthData } from "$lib/pages/auth/model/AuthData";
-	import type { ValidationErrors } from "$lib/pages/auth/model/Validation";
-	import { validateAuthData } from "$lib/pages/auth/model/Validation";
+	import type { ValidationErrors } from "$lib/entities/user/service/Validation";
+	import { validateAuthData } from "$lib/entities/user/service/Validation";
 
 	import { authHandlers, authStore } from "$lib/shared/auth/AuthStore";
 	import { notesPagePath } from "$lib/shared/path/model/Paths";
