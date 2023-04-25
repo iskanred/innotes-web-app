@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { ActionIcon, Button, Card, Grid, Stack, Text } from "@svelteuidev/core";
 	import type { Note } from "$lib/entities/notes/model/Note";
-	import NoteModal from "$lib/pages/note-modal/ui/NoteModal.svelte";
+	import NoteModal from "$lib/pages/notes/ui/NoteModal.svelte";
 	import { deleteNote } from "$lib/entities/notes/api/Crud";
 	import { authStore } from "$lib/shared/auth/AuthStore";
 	import { Trash } from "radix-icons-svelte";
-
-	const CONTENT_MAX_LENGTH = 70;
+	import { NOTE_CONTENT_MAX_DISPLAY_LENGTH } from "$lib/shared/constants/model/Constants";
 
 	const SPAN_SIZE = 4;
 
@@ -20,8 +19,8 @@
 	function stripContent(noteContent: string | null) {
 		if (!noteContent) {
 			return "";
-		} else if (noteContent.length > CONTENT_MAX_LENGTH) {
-			return noteContent.slice(0, CONTENT_MAX_LENGTH) + "...";
+		} else if (noteContent.length > NOTE_CONTENT_MAX_DISPLAY_LENGTH) {
+			return noteContent.slice(0, NOTE_CONTENT_MAX_DISPLAY_LENGTH) + "...";
 		} else {
 			return noteContent;
 		}

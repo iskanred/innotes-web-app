@@ -46,6 +46,9 @@
 			on:click={() => {
 				handleRemoveFolder(folder.id);
 			}}
+			override={{
+				marginLeft: 10
+			}}
 		>
 			<Trash size={28} />
 		</ActionIcon>
@@ -58,6 +61,9 @@
 				currentFolderId = folder.id;
 			}}
 			ripple
+			override={{
+				marginLeft: 20
+			}}
 		>
 			<Text size={32} align="center" weight="bold">
 				{folder.name}
@@ -70,6 +76,9 @@
 		ripple
 		on:click={() => {
 			newFolderAdding = true;
+		}}
+		override={{
+			marginLeft: 20
 		}}
 	>
 		<Text size={24} color="blue">+ Folder</Text>
