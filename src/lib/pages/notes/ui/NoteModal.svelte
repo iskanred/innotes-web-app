@@ -30,6 +30,7 @@
 			}
 		} else {
 			opened = false;
+			selectedNote = null;
 			clearFields();
 		}
 	}
@@ -48,9 +49,6 @@
 				notes = newNotes;
 				pageLoading = false;
 			});
-
-			selectedNote = null;
-			clearFields();
 		} else {
 			// create new note
 			addNote($authStore, noteTitle as string, noteContent, currentFolderId).then((note) => {
@@ -59,6 +57,8 @@
 				pageLoading = false;
 			});
 		}
+		selectedNote = null;
+		clearFields();
 	}
 
 	function clearFields() {

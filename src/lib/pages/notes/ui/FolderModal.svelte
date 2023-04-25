@@ -28,6 +28,7 @@
 			}
 		} else {
 			opened = false;
+			selectedFolder = null;
 			clearFields();
 		}
 	}
@@ -45,9 +46,6 @@
 				folders = sortedFolders(newFolders);
 				pageLoading = false;
 			});
-
-			selectedFolder = null;
-			clearFields();
 		} else {
 			// create new folder
 			addFolder($authStore, folderName as string).then((folder) => {
@@ -57,11 +55,13 @@
 				pageLoading = false;
 			});
 		}
+		selectedFolder = null;
+		clearFields();
 	}
 
 	function clearFields() {
 		validationErrorText = "";
-		folderName = "";
+		folderName = null;
 	}
 </script>
 
